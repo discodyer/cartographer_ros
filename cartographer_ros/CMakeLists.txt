@@ -234,6 +234,10 @@ target_include_directories(cartographer_rosbag_validate PRIVATE
 if ("$ENV{ROS_DISTRO}" STRLESS "kilted")
   target_compile_definitions(cartographer_rosbag_validate PRIVATE "-DUSE_URDF_H_FILES")
 endif()
+# Temporary fix for openEuler ROS humble:
+# Use <tf2/utils.h> instead of <tf2/utils.hpp> to avoid compilation errors.
+# This workaround addresses header file compatibility issues in the current environment.
+target_compile_definitions(cartographer_rosbag_validate PRIVATE "-DUSE_TF2_UTILS_H_FILES")
 target_link_libraries(cartographer_rosbag_validate
   ${PROJECT_NAME}
   absl::memory
